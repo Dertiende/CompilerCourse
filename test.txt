@@ -1,0 +1,29 @@
+def int check (int k, float b, int c)
+{
+    int d = 3;
+    if(d==7){
+    d = 8;
+    }
+    print(d);
+    print(k);
+    print (b);
+    print(c);
+    return d;
+
+}
+
+__main__(){
+
+int d = 1;
+int e = 1;
+bool count = true;
+while(d==e){
+    d = e+1;
+    print(d);
+}
+float r = d/4*50.5;
+print('g');
+
+check(1,1.2,2);
+//print(out);
+}
