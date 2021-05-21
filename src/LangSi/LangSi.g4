@@ -21,7 +21,7 @@ COMMENT:            '/*' .*? '*/' -> channel(HIDDEN);
 LINE_COMMENT:       '//' ~[\r\n]* -> channel(HIDDEN);
 
 compileUnit
-    : consts? function? main EOF
+    : consts? function*? main EOF
     ;
 
 main
@@ -92,7 +92,6 @@ varName
 
 statement
     : variableDeclaration ';'
-    | callFunction ';'
     | expr ';'
     | print ';'
     | ifStatement

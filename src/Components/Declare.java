@@ -3,6 +3,7 @@ package Components;
 import org.objectweb.asm.Opcodes;
 import symTable.Types;
 import Compile.Compile;
+import symTable.VisitImplement;
 
 public class Declare extends Stmt{
 
@@ -28,7 +29,9 @@ public class Declare extends Stmt{
     public void genJVM(){
         Types p = id.type;
         System.out.println("deb"+expr.op+" "+ expr.type+" "+id.op);
+
         expr.genJVM();
+        //
         if (Types.Int.equals(p)) {
             if (expr.op.equals("/")){
                 Compile.mv.visitInsn(Opcodes.F2I);

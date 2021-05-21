@@ -21,6 +21,13 @@ public class Types {
         else if (s.equals("bool")) return  Bool;
         else return null;
     }
+    public static String getString(Types p){
+        if (p.equals(Types.Int)) return "int";
+        else if (p.equals(Types.Float)) return "float";
+        else if (p.equals(Types.Char)) return "char";
+        else if (p.equals(Types.Bool)) return  "bool";
+        else return null;
+    }
 
     public static boolean numeric(Types p) {
         if (p == Types.Char || p == Types.Int || p == Types.Float) return true;

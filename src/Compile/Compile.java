@@ -22,7 +22,7 @@ public class Compile {
     Stmt main;
     Stmt consts;
     ArrayList<ArrayList> funcList;
-    Stack<Stmt> allFunc;
+    ArrayList<Stmt> allFunc;
     public static String className;
     public static MethodVisitor mv;
     private static ClassWriter cw;
@@ -35,7 +35,7 @@ public class Compile {
         this.main = main;
         this.consts = consts;
     }
-    public Compile(Stmt main, ArrayList<ArrayList> funcList, Stack<Stmt> allFunc){
+    public Compile(Stmt main, ArrayList<ArrayList> funcList, ArrayList<Stmt> allFunc){
         this.main = main;
         this.funcList = funcList;
         this.allFunc = allFunc;
@@ -56,8 +56,7 @@ public class Compile {
         mv = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null ,null);
         mv.visitVarInsn(Opcodes.ALOAD,0);
         mv.visitMaxs(1,1);
-        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V");
-
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V",false);
         mv.visitInsn(Opcodes.RETURN);
         mv.visitEnd();
         generateFunc();
@@ -82,23 +81,28 @@ public class Compile {
 
     public void generateFunc(){
 
-        String args = "";
-        for (int i=2;i<funcList.get(0).size();i++){
-            System.out.println("print "+funcList.get(0).get(i));
-            args = args+getType((String) funcList.get(0).get(i));
-            System.out.println("args "+ args);
-        }
-        String descript = "("+args+")"+getType((String) funcList.get(0).get(0));
-        System.out.println("desc "+ descript);
-        mv = cw.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC,(String) funcList.get(0).get(1),descript,null,null);
-        mv.visitVarInsn(Opcodes.ILOAD,0);
-        Stmt thisFunc = allFunc.pop();
-        System.out.println(" f"+thisFunc);
-        if (thisFunc != null) thisFunc.genJVM();
+        String args;
+        String descript;
+        for (int fun = 0; fun<funcList.size();fun++) {
+            args = "";
+            for (int i = 2; i < funcList.get(fun).size(); i++) {
+                System.out.println("print " + funcList.get(fun).get(i));
+                args = args + getType((String) funcList.get(fun).get(i));
+                System.out.println("args " + args);
+            }
+            descript = "(" + args + ")" + getType((String) funcList.get(fun).get(0));
+            System.out.println("desc " + descript);
+            mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, (String) funcList.get(fun).get(1), descript, null, null);
+            mv.visitVarInsn(Opcodes.ILOAD, 0);
+            System.out.println("cap "+allFunc.size());
+            Stmt thisFunc = allFunc.get(fun);
+            System.out.println(" f" + thisFunc);
+            if (thisFunc != null) thisFunc.genJVM();
 
-        mv.visitInsn(getReturnType((String) funcList.get(0).get(0)));
-        mv.visitMaxs(1,1);
-        mv.visitEnd();
+            mv.visitInsn(getReturnType((String) funcList.get(0).get(0)));
+            mv.visitMaxs(1, 1);
+            mv.visitEnd();
+        }
     }
 
     public int getReturnType(String s){
@@ -109,7 +113,7 @@ public class Compile {
         return 0;
     }
 
-    public String getType(String s) {
+    public static String getType(String s) {
         if (s.equals("int")) return "I";
         if (s.equals("float")) return "F";
         if (s.equals("bool")) return "Z";
@@ -121,9 +125,9 @@ public class Compile {
         System.out.println(" m"+main);
         if (main != null) main.genJVM();
         else System.out.println("Statement is clear");
-        mv.visitMethodInsn(Opcodes.INVOKESTATIC, "test","check","(IFI)I",false);
+        //mv.visitMethodInsn(Opcodes.INVOKESTATIC, className,"check","(IFI)I",false);
         //mv.visitFrame(Opcodes.;
-        mv.visitInsn(Opcodes.POP);
+        //mv.visitInsn(Opcodes.POP);
         mv.visitInsn(Opcodes.RETURN);
         mv.visitMaxs(1,1);
         mv.visitEnd();
