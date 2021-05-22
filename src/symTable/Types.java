@@ -8,8 +8,8 @@ public class Types {
     public Types(String s, int w) {type = s; memWidth = w;}
 
     public static final Types
-            Int = new Types("int",4),
-            Float = new Types("float",4),
+            Int = new Types("int",32),
+            Float = new Types("float",32),
             Char = new Types("char",1),
             Bool = new Types("bool", 1);
 

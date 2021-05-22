@@ -17,30 +17,52 @@ public class Arith extends Op {
     }
 
     public void genJVM() {
+        Types t1 = expr1.type;
+        Types t2 = expr2.type;
 
         switch (op) {
             case "+":
                 System.out.println("Arith + "+expr1.op+expr2.op);
+
                 expr1.genJVM();
+                if (Types.Int.equals(t1) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
+
                 expr2.genJVM();
+                if (Types.Int.equals(t2) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
                 if (Types.Float.equals(type)) Compile.mv.visitInsn(Opcodes.FADD);
                 else Compile.mv.visitInsn(Opcodes.IADD);
                 break;
             case "-":
                 expr1.genJVM();
+                if (Types.Int.equals(t1) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
+
                 expr2.genJVM();
+                if (Types.Int.equals(t2) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
                 if (Types.Float.equals(type)) Compile.mv.visitInsn(Opcodes.FSUB);
                 else Compile.mv.visitInsn(Opcodes.ISUB);
                 break;
             case "*":
                 expr1.genJVM();
+                if (Types.Int.equals(t1) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
+
                 expr2.genJVM();
+                if (Types.Int.equals(t2) && Types.Float.equals(type)){
+                    Compile.mv.visitInsn(Opcodes.I2F);
+                }
                 if (Types.Float.equals(type)) Compile.mv.visitInsn(Opcodes.FMUL);
                 else Compile.mv.visitInsn(Opcodes.IMUL);
                 break;
             case "/":
-                Types t1 = expr1.type;
-                Types t2 = expr2.type;
                 expr1.genJVM();
                 if (Types.Int.equals(t1)){
                     Compile.mv.visitInsn(Opcodes.I2F);

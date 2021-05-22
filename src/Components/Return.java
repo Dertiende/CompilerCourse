@@ -29,10 +29,10 @@ public class Return extends Stmt {
             System.out.println("LiteralReturn "+ e.op);
             if (Types.Int.equals(e.type) || Types.Bool.equals(e.type) || Types.Char.equals(e.type)) {
                 //e.genJVM();
-                Compile.mv.visitInsn(Opcodes.BIPUSH);
+                Compile.mv.visitLdcInsn(Opcodes.LDC);
             } else if (Types.Float.equals(e.type)) {
                 //e.genJVM();
-                Compile.mv.visitInsn(Opcodes.BIPUSH);
+                Compile.mv.visitLdcInsn(Opcodes.LDC);
             }
             }
 

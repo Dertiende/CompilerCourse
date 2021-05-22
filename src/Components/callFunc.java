@@ -38,7 +38,7 @@ public class callFunc extends Expr{
                 System.out.println("LiteralReturn "+ args.get(i).e.op);
                 if (Types.Int.equals(args.get(i).e.type) || Types.Bool.equals(args.get(i).e.type) || Types.Char.equals(args.get(i).e.type)) {
                     //e.genJVM();
-                    Compile.mv.visitIntInsn(Opcodes.BIPUSH, Integer.parseInt(args.get(i).e.op));
+                    Compile.mv.visitLdcInsn(new Integer( Integer.parseInt(args.get(i).e.op)));
                 } else if (Types.Float.equals(args.get(i).e.type)) {
                     //e.genJVM();
                     Compile.mv.visitLdcInsn(new Float(args.get(i).e.op));

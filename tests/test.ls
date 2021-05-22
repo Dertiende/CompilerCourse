@@ -45,7 +45,7 @@ while(d==e){
     print(d);
     print('e');
 }
-int r = 4-1000042;
+int r = 4-24;
 int re = r+20;
 print(r);
 print(re);

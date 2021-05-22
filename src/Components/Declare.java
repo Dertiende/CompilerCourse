@@ -38,6 +38,9 @@ public class Declare extends Stmt{
             }
             Compile.mv.visitVarInsn(Opcodes.ISTORE, id.offset);
         } else if (Types.Float.equals(p)) {
+            if (expr.type.equals(Types.Int)){
+                Compile.mv.visitInsn(Opcodes.I2F);
+            }
             Compile.mv.visitVarInsn(Opcodes.FSTORE, id.offset);
         } else if (Types.Char.equals(p)) {
             Compile.mv.visitVarInsn(Opcodes.ISTORE, id.offset);

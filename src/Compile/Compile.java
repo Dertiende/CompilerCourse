@@ -93,13 +93,13 @@ public class Compile {
             descript = "(" + args + ")" + getType((String) funcList.get(fun).get(0));
             System.out.println("desc " + descript);
             mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, (String) funcList.get(fun).get(1), descript, null, null);
-            mv.visitVarInsn(Opcodes.ILOAD, 0);
+            //mv.visitVarInsn(Opcodes.ILOAD, 0);
             System.out.println("cap "+allFunc.size());
             Stmt thisFunc = allFunc.get(fun);
             System.out.println(" f" + thisFunc);
             if (thisFunc != null) thisFunc.genJVM();
 
-            mv.visitInsn(getReturnType((String) funcList.get(0).get(0)));
+            mv.visitInsn(getReturnType((String) funcList.get(fun).get(0)));
             mv.visitMaxs(1, 1);
             mv.visitEnd();
         }
