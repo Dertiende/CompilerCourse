@@ -94,9 +94,9 @@ statement
     : variableDeclaration ';'
     | expr ';'
     | print ';'
-    | ifStatement
+    | ifCondtion
     | assignment
-    | whileStatement
+    | whileCicle
     ;
 
 print
@@ -108,12 +108,45 @@ printList
     | varName # PrintVar
     ;
 
+ifCondtion
+    : IF '(' logicExprList ')'  ifBlock
+    ;
+
+ifBlock
+    : '{' (ifStatement)* '}'
+    ;
+
 ifStatement
-    : IF '(' logicExprList ')'  block
+    : variableDeclaration ';'
+    | expr ';'
+    | print ';'
+    | ifCondtion
+    | assignment
+    | whileCicle
+    | breakContinue
+    ;
+
+breakContinue
+    : BREAK ';'
+    | CONTINUE ';'
+    ;
+
+
+whileCicle
+    : WHILE '(' logicExprList ')' whileBlock
+    ;
+
+whileBlock
+    : '{' (whileStatement)* '}'
     ;
 
 whileStatement
-    : WHILE '(' logicExprList ')' block|(BREAK';'|CONTINUE';')
+    : variableDeclaration ';'
+    | expr ';'
+    | print ';'
+    | ifCondtion
+    | assignment
+    | whileCicle
     ;
 
 logicExprList

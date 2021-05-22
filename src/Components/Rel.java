@@ -37,6 +37,9 @@ public class Rel extends Logical{
             case "<=":
                 Compile.mv.visitJumpInsn(Opcodes.IF_ICMPLE, trueLabel);
                 break;
+            case "!=":
+                Compile.mv.visitJumpInsn(Opcodes.IF_ICMPNE, trueLabel);
+                break;
         }
         Compile.mv.visitInsn(Opcodes.ICONST_0);
         Compile.mv.visitJumpInsn(Opcodes.GOTO, endLabel);

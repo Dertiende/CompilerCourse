@@ -133,11 +133,41 @@ public interface LangSiVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrintVar(LangSiParser.PrintVarContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LangSiParser#ifCondtion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfCondtion(LangSiParser.IfCondtionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangSiParser#ifBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfBlock(LangSiParser.IfBlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LangSiParser#ifStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIfStatement(LangSiParser.IfStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangSiParser#breakContinue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBreakContinue(LangSiParser.BreakContinueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangSiParser#whileCicle}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileCicle(LangSiParser.WhileCicleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangSiParser#whileBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileBlock(LangSiParser.WhileBlockContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangSiParser#whileStatement}.
 	 * @param ctx the parse tree

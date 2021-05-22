@@ -212,6 +212,26 @@ public interface LangSiListener extends ParseTreeListener {
 	 */
 	void exitPrintVar(LangSiParser.PrintVarContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LangSiParser#ifCondtion}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfCondtion(LangSiParser.IfCondtionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangSiParser#ifCondtion}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfCondtion(LangSiParser.IfCondtionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LangSiParser#ifBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfBlock(LangSiParser.IfBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangSiParser#ifBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfBlock(LangSiParser.IfBlockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LangSiParser#ifStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -221,6 +241,36 @@ public interface LangSiListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(LangSiParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LangSiParser#breakContinue}.
+	 * @param ctx the parse tree
+	 */
+	void enterBreakContinue(LangSiParser.BreakContinueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangSiParser#breakContinue}.
+	 * @param ctx the parse tree
+	 */
+	void exitBreakContinue(LangSiParser.BreakContinueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LangSiParser#whileCicle}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileCicle(LangSiParser.WhileCicleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangSiParser#whileCicle}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileCicle(LangSiParser.WhileCicleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LangSiParser#whileBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileBlock(LangSiParser.WhileBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LangSiParser#whileBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileBlock(LangSiParser.WhileBlockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LangSiParser#whileStatement}.
 	 * @param ctx the parse tree

@@ -8,6 +8,7 @@ import java.util.Stack;
 import Compile.Compile;
 import LangSi.LangSiBaseVisitor;
 import LangSi.LangSiParser;
+import org.objectweb.asm.Label;
 
 public class VisitImplement extends LangSiBaseVisitor<Node> {
     ArrayList<ArrayList> funcList = new ArrayList<>();
@@ -16,7 +17,10 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     Table consts = null;
     Table func = new Table(null);
     Table top = null;
-    Table saved = null;
+    public static Label start = null;
+    public static Label end = null;
+    While savedW = null;
+    While w = null;
     int used = 0;
     int usedF = 0;
 
@@ -132,6 +136,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         //consts.print("consts");
         top.print("top");
         top = savedTable;
+
         //consts.print("consts");
 
         //System.out.println(top.toString());
@@ -142,7 +147,10 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
     @Override
     public Node visitStatement(LangSiParser.StatementContext ctx) {
-        return visit(ctx.getChild(0));
+        While savedW = w;
+        Node k =  visit(ctx.getChild(0));
+        //w = savedW;
+        return k;
     }
 
 
@@ -280,10 +288,36 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
 
     @Override
-    public Node visitWhileStatement(LangSiParser.WhileStatementContext ctx) {
+    public Node visitWhileCicle (LangSiParser.WhileCicleContext ctx) {
+
         Expr x = (Expr)visit(ctx.logicExprList());
-        Stmt s1 = (Stmt) visit(ctx.block());
-        return new While(x, s1);
+        Stmt s1 = (Stmt) visit(ctx.whileBlock());
+         w = new While(x,s1);
+        return w;
+    }
+
+    @Override
+    public Node visitWhileBlock (LangSiParser.WhileBlockContext ctx){
+        Stack<Stmt> stack = new Stack<>();
+
+        for (int i = 0; i < ctx.whileStatement().size(); i++) {
+            System.out.println(ctx.whileStatement(i).getText());
+            stack.push((Stmt) visit(ctx.whileStatement(i)));
+        }
+        Seq seq = new Seq(stack.pop(), Stmt.Null);
+        while (!stack.empty()) {
+            seq = new Seq(stack.pop(), seq);
+        }
+
+        Stmt s = seq;
+        top.print("top");
+
+        //System.out.println(top.toString());
+        return s;
+    }
+    @Override
+    public Node visitWhileStatement (LangSiParser.WhileStatementContext ctx){
+        return visit(ctx.getChild(0));
     }
 
     @Override
@@ -303,12 +337,47 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     }
 
     @Override
-    public Node visitIfStatement(LangSiParser.IfStatementContext ctx) {
+    public Node visitIfCondtion(LangSiParser.IfCondtionContext ctx) {
         Expr x; Stmt s1, s2;
         x = (Expr) visit(ctx.logicExprList());
-        s1 = (Stmt) visit(ctx.block());
+        s1 = (Stmt) visit(ctx.ifBlock());
 
         return new If(x, s1);
+    }
+
+    @Override
+    public Node visitIfBlock (LangSiParser.IfBlockContext ctx){
+        Stack<Stmt> stack = new Stack<>();
+
+        for (int i = 0; i < ctx.ifStatement().size(); i++) {
+            System.out.println(ctx.ifStatement(i).getText());
+            stack.push((Stmt) visit(ctx.ifStatement(i)));
+        }
+        Seq seq = new Seq(stack.pop(), Stmt.Null);
+        while (!stack.empty()) {
+            seq = new Seq(stack.pop(), seq);
+        }
+
+        Stmt s = seq;
+        //consts.print("consts");
+        top.print("top");
+
+        //consts.print("consts");
+
+        //System.out.println(top.toString());
+        return s;
+    }
+
+    @Override
+    public Node visitIfStatement (LangSiParser.IfStatementContext ctx){
+        return visit(ctx.getChild(0));
+    }
+
+    @Override
+    public Node visitBreakContinue (LangSiParser.BreakContinueContext ctx){
+        String s = ctx.children.get(0).getText();
+        System.out.println("Brk "+ctx.children.get(0).getText());
+        return new BreakContinue(s);
     }
 
     @Override
