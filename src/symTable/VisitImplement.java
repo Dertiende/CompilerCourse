@@ -34,21 +34,21 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         oneFuncList.add(ctx.types().getText());
         oneFuncList.add(funcName);
         //func.put(funcName,id);
-        System.out.println("args "+oneFuncList);
+        //System.out.println("args "+oneFuncList);
 
         Table savedTable = top;
-        System.out.println("used "+used);
+        //System.out.println("used "+used);
         Id funcID = new Id(funcName,t,usedF++);
         func.put(funcName,funcID);
-        func.print("func list");
+        //func.print("func list");
         top = new Table(top);
         for (int i = 0;i<ctx.argsList().children.size();i=i+2){
-            System.out.println("print f "+ctx.argsList().children.get(i).getChild(1).getText());
+            //System.out.println("print f "+ctx.argsList().children.get(i).getChild(1).getText());
             oneFuncList.add(ctx.argsList().children.get(i).getChild(0).getText());
             Types p = Types.getType(ctx.argsList().children.get(i).getChild(0).getText());
-            System.out.println("used "+used);
+            //System.out.println("used "+used);
             Id id = new Id(ctx.argsList().children.get(i).getChild(1).getText(),p,used++);
-            System.out.println("used "+used);
+            //System.out.println("used "+used);
             top.put(ctx.argsList().children.get(i).getChild(1).getText(),id);
         }
         funcList.add(oneFuncList);
@@ -58,13 +58,13 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
     @Override
     public Node visitBlockFunc (LangSiParser.BlockFuncContext ctx){
-        top.print("topBFS");
+        //top.print("topBFS");
         Table savedTable = top;
         top = new Table(top);
         Stack<Stmt> stack = new Stack<>();
 
         for (int i = 0; i < ctx.statement().size(); i++) {
-            System.out.println("BlockFunc "+ctx.statement(i).getText());
+            //System.out.println("BlockFunc "+ctx.statement(i).getText());
             stack.push((Stmt) visit(ctx.statement(i)));
         }
         //Seq seq = new Seq(stack.pop(), );
@@ -75,7 +75,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
 
         Stmt s = seq;
-        top.print("topFunc");
+        //top.print("topFunc");
         top = savedTable;
         return s;
     }
@@ -90,7 +90,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         Stack<Stmt> stack = new Stack<>();
 
         for (int i = 0; i < ctx.statement().size(); i++) {
-            System.out.println(ctx.statement(i).getText());
+            //System.out.println(ctx.statement(i).getText());
             stack.push((Stmt) visit(ctx.statement(i)));
         }
         Seq seq = new Seq(stack.pop(), Stmt.Null);
@@ -100,7 +100,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
         Stmt s = seq;
         //consts.print("consts");
-        top.print("top");
+        //top.print("top");
         top = savedTable;
 
         //consts.print("consts");
@@ -124,22 +124,21 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     public Node visitCompileUnit(LangSiParser.CompileUnitContext ctx) {
 
 
-
         Stmt func = null;
-        System.out.println("Size "+ ctx.function().size());
-        for (int i =0; i<ctx.function().size();i++){
+        //System.out.println("Size "+ ctx.function().size());
+        for (int i = 0; i < ctx.function().size(); i++) {
             func = (Stmt) visit(ctx.function(i));
             allFunc.add(func);
-            System.out.println("allf "+ ctx.function().size());}
-        Stmt main = (Stmt)visit(ctx.main());
+            }
+            Stmt main = (Stmt) visit(ctx.main());
 
-        // jvm код
-        Compile t = new Compile(main,funcList,allFunc);
-        t.generateClass(new File("test.class"));
+            // jvm код
+            Compile t = new Compile(main, funcList, allFunc);
+            t.generateClass(new File("test.class"));
 
-        return main;
+            return main;
+
     }
-
 
     @Override
     public Node visitMain(LangSiParser.MainContext ctx) {
@@ -164,9 +163,9 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     public Node visitReturnFunc (LangSiParser.ReturnFuncContext ctx){
         if (ctx.varName()!=null)
         {
-            System.out.println("varname"+ctx.varName().getText());
+            //System.out.println("varname"+ctx.varName().getText());
             Id id = top.get(ctx.varName().getText());
-            System.out.println(id.offset);
+            //System.out.println(id.offset);
             return new Return(id);
         }
         else error("return field is empty");
@@ -188,7 +187,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
             }
             else{
                 Expr e = null;
-                System.out.println("callf"+ctx.callFunctionList(i).literal().getText());
+                //System.out.println("callf"+ctx.callFunctionList(i).literal().getText());
                 if (ctx.callFunctionList(i).literal().intLiteral()!=null){
                     String name = ctx.callFunctionList(i).literal().getText();
                     e = new Expr(name,Types.Int);
@@ -209,7 +208,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
             }
         }
         Id fId = func.get(ctx.funcName().getText());
-        System.out.println("fName "+fId.op + fId.type.type);
+        //System.out.println("fName "+fId.op + fId.type.type);
         return new callFunc(callArgs,ctx.funcName().getText(), fId);
     }
 
@@ -218,8 +217,8 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
 
         Id id;
-        func.print("func list upd");
-        System.out.println("func name "+ctx.children.get(0).getChild(0).getText());
+        //func.print("func list upd");
+        //System.out.println("func name "+ctx.children.get(0).getChild(0).getText());
         String fName = ctx.children.get(0).getChild(0).getText();
         Types t = func.get(ctx.children.get(0).getChild(0).getText()).type;
         id = new Id (fName,t,used++);
@@ -262,7 +261,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         Stack<Stmt> stack = new Stack<>();
 
         for (int i = 0; i < ctx.whileStatement().size(); i++) {
-            System.out.println(ctx.whileStatement(i).getText());
+            //System.out.println(ctx.whileStatement(i).getText());
             stack.push((Stmt) visit(ctx.whileStatement(i)));
         }
         Seq seq = new Seq(stack.pop(), Stmt.Null);
@@ -271,7 +270,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         }
 
         Stmt s = seq;
-        top.print("top");
+        //top.print("top");
 
         //System.out.println(top.toString());
         return s;
@@ -311,7 +310,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         Stack<Stmt> stack = new Stack<>();
 
         for (int i = 0; i < ctx.ifStatement().size(); i++) {
-            System.out.println(ctx.ifStatement(i).getText());
+            //System.out.println(ctx.ifStatement(i).getText());
             stack.push((Stmt) visit(ctx.ifStatement(i)));
         }
         Seq seq = new Seq(stack.pop(), Stmt.Null);
@@ -321,7 +320,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
         Stmt s = seq;
         //consts.print("consts");
-        top.print("top");
+        //top.print("top");
 
         //consts.print("consts");
 
@@ -337,7 +336,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     @Override
     public Node visitBreakContinue (LangSiParser.BreakContinueContext ctx){
         String s = ctx.children.get(0).getText();
-        System.out.println("Brk "+ctx.children.get(0).getText());
+        //System.out.println("Brk "+ctx.children.get(0).getText());
         return new BreakContinue(s);
     }
 
@@ -377,7 +376,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     @Override
     public Node visitAssignment(LangSiParser.AssignmentContext ctx) {
         String varName = ctx.varName().getText();
-        System.out.println("Asign " + varName);
+        //System.out.println("Asign " + varName);
         Id id = top.get(varName);
         if( id == null ) error(  ctx.start.getLine() + ": " + varName + " undeclared");
         Expr x = (Expr) visit(ctx.expr());

@@ -10,7 +10,7 @@ public class Return extends Stmt {
     Boolean isLiteral = false;
     public Return(Id id) {
         this.id = id;
-        System.out.println("trying to return "+ id.op);
+        //System.out.println("trying to return "+ id.op);
     }
     public Return (Expr e){
         this.e = e;
@@ -26,7 +26,7 @@ public class Return extends Stmt {
                 Compile.mv.visitVarInsn(Opcodes.FLOAD, id.offset);
             } }
         else{
-            System.out.println("LiteralReturn "+ e.op);
+            //System.out.println("LiteralReturn "+ e.op);
             if (Types.Int.equals(e.type) || Types.Bool.equals(e.type) || Types.Char.equals(e.type)) {
                 //e.genJVM();
                 Compile.mv.visitLdcInsn(Opcodes.LDC);

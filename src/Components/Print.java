@@ -9,7 +9,7 @@ public class Print extends Stmt{
 
     public Print (Expr x) {
         expr = x;
-        System.out.println("trying to print "+ expr);
+        //System.out.println("trying to print "+ expr);
     }
     public  Print (String s){
 

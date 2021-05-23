@@ -74,17 +74,17 @@ public class Compile {
         for (int fun = 0; fun<funcList.size();fun++) {
             args = "";
             for (int i = 2; i < funcList.get(fun).size(); i++) {
-                System.out.println("print " + funcList.get(fun).get(i));
+                //System.out.println("print " + funcList.get(fun).get(i));
                 args = args + getType((String) funcList.get(fun).get(i));
-                System.out.println("args " + args);
+                //System.out.println("args " + args);
             }
             descript = "(" + args + ")" + getType((String) funcList.get(fun).get(0));
-            System.out.println("desc " + descript);
+            //System.out.println("desc " + descript);
             mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
                                 (String) funcList.get(fun).get(1), descript, null, null);
-            System.out.println("cap "+allFunc.size());
+            //System.out.println("cap "+allFunc.size());
             Stmt thisFunc = allFunc.get(fun);
-            System.out.println(" f" + thisFunc);
+            //System.out.println(" f" + thisFunc);
             if (thisFunc != null) thisFunc.genJVM();
 
             mv.visitInsn(getReturnType((String) funcList.get(fun).get(0)));
@@ -94,7 +94,7 @@ public class Compile {
     }
 
     public int getReturnType(String s){
-        System.out.println("rtype " +s);
+        //System.out.println("rtype " +s);
         if (s.equals("int")) return Opcodes.IRETURN;
         if (s.equals("float")) return Opcodes.FRETURN;
         if (s.equals("bool")) return Opcodes.RETURN;
@@ -110,7 +110,7 @@ public class Compile {
 
     public void generateMain() {
         mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
-        System.out.println(" m"+main);
+        //System.out.println(" m"+main);
         if (main != null) main.genJVM();
         else System.out.println("Statement is clear");
         //mv.visitMethodInsn(Opcodes.INVOKESTATIC, className,"check","(IFI)I",false);

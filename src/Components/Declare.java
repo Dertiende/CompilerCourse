@@ -28,7 +28,7 @@ public class Declare extends Stmt{
 
     public void genJVM(){
         Types p = id.type;
-        System.out.println("deb"+expr.op+" "+ expr.type+" "+id.op);
+        //System.out.println("deb"+expr.op+" "+ expr.type+" "+id.op);
 
         expr.genJVM();
         //

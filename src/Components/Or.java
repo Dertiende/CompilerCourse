@@ -9,10 +9,10 @@ public class Or extends Logical{
 
 
     public void genJVM() {
-        System.out.println("OR!!");
+        //System.out.println("OR!!");
         expr1.genJVM();
         expr2.genJVM();
-        System.out.println("IADD");
+        //System.out.println("IADD");
         Compile.mv.visitInsn(Opcodes.IADD);
     }
 }

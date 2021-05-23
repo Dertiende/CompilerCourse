@@ -22,7 +22,7 @@ def  int fib (int num)
 
 __main__()
 {
-    int out = fib(8);
+    int out = fib(4);
     print(out);
 
 }

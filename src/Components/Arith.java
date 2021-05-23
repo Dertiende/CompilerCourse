@@ -22,7 +22,7 @@ public class Arith extends Op {
 
         switch (op) {
             case "+":
-                System.out.println("Arith + "+expr1.op+expr2.op);
+                //System.out.println("Arith + "+expr1.op+expr2.op);
 
                 expr1.genJVM();
                 if (Types.Int.equals(t1) && Types.Float.equals(type)){

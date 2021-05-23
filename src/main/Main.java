@@ -15,7 +15,7 @@ class Main {
     public static void main(String[] args) {
         try{
             if (args.length<1){
-                System.out.println("file path required");
+                //System.out.println("file path required");
                 return;
             }
             String f = args[0];
