@@ -1,18 +1,22 @@
 grammar LangSi;
 
+AND:                'and';
 BOOLEAN:            'bool';
 BREAK:              'break';
 CHAR:               'char';
 CONST:              'const';
 CONTINUE:           'continue';
+DEF:                'def';
+FALSE:              'false';
 FLOAT:              'float';
 IF:                 'if';
 INT:                'int';
-WHILE:              'while';
-DEF:                'def';
-RETURN:             'return';
-PRINT:              'print';
 MAIN:               '__main__()';
+OR:                 'or';
+PRINT:              'print';
+RETURN:             'return';
+TRUE:               'true';
+WHILE:              'while';
 
 LETTERS:            ('a' .. 'z' | 'A' .. 'Z')+;
 NUMBERS:            [0-9] ([0-9])*;
@@ -21,7 +25,7 @@ COMMENT:            '/*' .*? '*/' -> channel(HIDDEN);
 LINE_COMMENT:       '//' ~[\r\n]* -> channel(HIDDEN);
 
 compileUnit
-    : consts? function*? main EOF
+    : function*? main EOF
     ;
 
 main
@@ -47,12 +51,6 @@ returnFunc
 funcName
     : LETTERS+ (LETTERS+|NUMBERS)*
     ;
-
-
-consts
-    : CONST variableDeclaration';' (CONST variableDeclaration ';')*
-    ;
-
 
 types
     : BOOLEAN
@@ -80,10 +78,6 @@ callFunction
 
 argsList
     : (variableDeclaration (',' variableDeclaration)*)?
-    ;
-
-exprList
-    : (expr (',' expr)*)?
     ;
 
 varName
@@ -150,7 +144,7 @@ whileStatement
     ;
 
 logicExprList
-    : logicExpr (pob=('and' | 'or') logicExpr)*
+    : logicExpr (pob=(AND | OR) logicExpr)*
     ;
 
 logicExpr
@@ -182,8 +176,8 @@ intLiteral
     ;
 
 boolLiteral
-    : 'true'
-    | 'false'
+    : TRUE
+    | FALSE
     ;
 
 charLiteral

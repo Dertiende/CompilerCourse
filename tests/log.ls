@@ -1,3 +1,6 @@
+/*
+    Программа для нахождения логарифма числа с указанным основанием
+*/
 def float sqr (float num, int count)
 {
     int i = 0;
@@ -31,7 +34,6 @@ def float ln (int num)
     }
     ans = ans*tempAns;
     return ans;
-
 }
 
 __main__()

@@ -13,6 +13,7 @@ public class Table {
     public Table(Table t) {table = new HashMap<>();prev = t;}
 
     public void put(String s,Id e) {table.put(s,e);}
+
     public void print(String name){
         for (Map.Entry<String,Id> entry : table.entrySet()){
             String s = entry.getKey();

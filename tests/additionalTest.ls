@@ -1,3 +1,8 @@
+/*
+    Программа для вычисления суммы всех чётных чисел
+    от 0 до заданного значения.
+*/
+
 def int sumEvenNum (int limit)
 {
     int i = 0;
@@ -7,25 +12,20 @@ def int sumEvenNum (int limit)
     {
         result = result + i;
         i = i + 2;
-
         if (k < 5 and k != 4 )
         {
             print('k');
             k = k+1;
         }
-
         if (i < limit )
         {
             continue;
             i = 10000000;
             print('e');
         }
-
         if (i >= limit)
         {
             break;
-
-
         }
     }
     print('e');

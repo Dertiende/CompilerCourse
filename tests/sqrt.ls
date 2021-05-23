@@ -1,3 +1,8 @@
+/*
+    Программа для нахождения квадратного корня
+    Алгоритм: Bakhsali Approximation
+*/
+
 def float sqrt (int num)
 {
     int i = 0;
@@ -14,7 +19,7 @@ def float sqrt (int num)
     float a = i + p;
     d = p * p;
     t = 2 * a;
-    p = a- d / t;
+    p = a - d / t;
     return p;
 
 }
