@@ -42,8 +42,4 @@ __main__()
 }
 ```
 
-### 2. Пример дерева разбора с помощью ***#grun***
-
-![grun tree](https://github.com/Dertiende/CompilerCourse/blob/master/parseTree.png)
-
 
