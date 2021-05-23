@@ -47,21 +47,9 @@ public class Compile {
         if(className.contains(".")) className = className.substring(0,className.lastIndexOf('.'));
 
         cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-        FieldVisitor fv;
-
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, className,null, "java/lang/Object", null);
-
-        if (consts != null) generateConst();
-
-        mv = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null ,null);
-        mv.visitVarInsn(Opcodes.ALOAD,0);
-        mv.visitMaxs(1,1);
-        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V",false);
-        mv.visitInsn(Opcodes.RETURN);
-        mv.visitEnd();
         generateFunc();
         generateMain();
-
         cw.visitEnd();
         this.WriteClass(cw, file);
     }
@@ -92,8 +80,8 @@ public class Compile {
             }
             descript = "(" + args + ")" + getType((String) funcList.get(fun).get(0));
             System.out.println("desc " + descript);
-            mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, (String) funcList.get(fun).get(1), descript, null, null);
-            //mv.visitVarInsn(Opcodes.ILOAD, 0);
+            mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
+                                (String) funcList.get(fun).get(1), descript, null, null);
             System.out.println("cap "+allFunc.size());
             Stmt thisFunc = allFunc.get(fun);
             System.out.println(" f" + thisFunc);

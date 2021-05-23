@@ -14,7 +14,6 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     ArrayList<ArrayList> funcList = new ArrayList<>();
     ArrayList<String> oneFuncList;
     ArrayList<Stmt> allFunc = new ArrayList<>();
-    Table consts = null;
     Table func = new Table(null);
     Table top = null;
     public static Label start = null;
@@ -25,39 +24,6 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
     int usedF = 0;
 
     void error(String s) {throw new Error(s);}
-    @Override
-    public Node visitConsts(LangSiParser.ConstsContext ctx) {
-
-        consts = new Table(null);
-        Stack <Stmt> stack = new Stack<>();
-        for (int i=0;i<ctx.variableDeclaration().size();i++){
-            String name = ctx.variableDeclaration(i).varName().getText();
-            Id id = consts.get(name);
-            if (id == null) {
-                Types type = Types.getType(ctx.variableDeclaration(i).types().getText());
-                String val = ctx.variableDeclaration(i).expr().toString();
-                ObjConst cnst = new ObjConst(name,type,val);
-                //consts.put(name,new Id(name,type,used++));
-                consts.print("con");
-                stack.push((Stmt) cnst);
-
-            }
-            else error(ctx.start.getText()+" already exists");
-        }
-        if (stack.size()>1){
-            Stmt stmt1 = stack.pop();
-            Seq seq = new Seq(stack.pop(),stmt1);
-            while (!stack.empty()) {
-                seq = new Seq(stack.pop(),stmt1);
-            }
-
-            return seq;
-        }
-        else {
-            consts.print("consts");
-            //System.out.println(top.toString());
-            return stack.pop();}
-    }
 
     @Override
     public Node visitFunction (LangSiParser.FunctionContext ctx){
@@ -177,7 +143,6 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
 
     @Override
     public Node visitMain(LangSiParser.MainContext ctx) {
-        top = new Table(consts);
         return visit(ctx.block());
     }
 
@@ -190,11 +155,7 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         Id id = new Id(varName, p, used++);
         top.put(varName, id);
         if (ctx.expr() != null) {
-
             Expr x = (Expr) visit(ctx.expr());
-            System.out.println("Declarat "+x.op);
-            //top.put(varName, id);
-            top.print("topVarDec");
             return new Declare(id, x);
         }
         return new Declare(id);

@@ -21,12 +21,9 @@ public class While extends Stmt{
         endCycle = new Label();
         VisitImplement.start = startCycle;
         VisitImplement.end = endCycle;
-        System.out.println("IN WHILE");
         Compile.mv.visitLabel(startCycle);
-        //Compile.mv.visitFrame(Opcodes.F_NEW,0,null,0,null);
         expr.genJVM();
         Compile.mv.visitJumpInsn(Opcodes.IFEQ, endCycle);
-
         Compile.mv.visitLabel(statements);
         stmt.genJVM();
         Compile.mv.visitJumpInsn(Opcodes.GOTO, startCycle);

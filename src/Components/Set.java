@@ -41,7 +41,6 @@ public class Set extends Stmt{
 
         if (Types.Int.equals(p)) {
             expr.genJVM();
-            System.out.println("trying to set "+expr.op);
             if (expr.op.equals("/")){
                 Compile.mv.visitInsn(Opcodes.F2I);
             }
