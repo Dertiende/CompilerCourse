@@ -152,7 +152,13 @@ public class VisitImplement extends LangSiBaseVisitor<Node> {
         Types p = Types.getType(ctx.types().getText());
         if (p == null) error(ctx.start.getLine() + ": " + varName + " null type exception");
         Id id = new Id(varName, p, used++);
-        top.put(varName, id);
+        if (top.get(varName) == null){
+            top.put(varName, id);
+        }
+        else {
+            error(varName+ " already defined");
+            return Node.Null;
+        }
         if (ctx.expr() != null) {
             Expr x = (Expr) visit(ctx.expr());
             return new Declare(id, x);
